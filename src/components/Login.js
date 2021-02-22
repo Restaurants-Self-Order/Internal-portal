@@ -33,10 +33,10 @@ import {
 } from "reactstrap";
 import { useFormik } from 'formik';
 import axiosClient from "../services/AxiosClient";
-import {  useDispatch } from "react-redux"
+import {  connect, useDispatch } from "react-redux"
 import jwtDecode from "jwt-decode";
 import {  useHistory } from 'react-router-dom'
-import { auth } from "../store/types";
+import { startLogin } from "store/actions/auth";
 function UserProfile() {
 const router = useHistory();
 const dispatch = useDispatch();
@@ -83,8 +83,10 @@ const dispatch = useDispatch();
                 localStorage.setItem('access_token' , data.access )
 
                 const payload =  jwtDecode(data.access);
-               
-                dispatch({type: auth.LOGIN, data: { user: payload, token: data.access}})
+                dispatch({type: 'AUTHENTICATE',  data: {user: payload, token : data.access}})
+                // console.log(payload)
+              //  await startLogin({decoded: payload, token:  data.access})
+                // dispatch({type: 'AUTHENTICATE', data: { user: payload, token: data.access}})
 
                 router.push('/')
                 
@@ -176,11 +178,10 @@ const dispatch = useDispatch();
   );
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//     // startLogin: (data) => dispatch(startLogin(data)),
-//     // startFetchLeads: () => dispatch(startFetchLeads())
-// })
+const mapDispatchToProps = (dispatch) => ({
+    startLogin: data => dispatch(startLogin(data)),
+  
+})
 
-// export default connect(undefined, mapDispatchToProps)(UserProfile)
+export default connect(undefined, mapDispatchToProps)(UserProfile)
 
-export default UserProfile

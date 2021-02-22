@@ -29,7 +29,7 @@ var routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    rtlName: "لوحة القيادة",
+    // rtlName: "لوحة القيادة",
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
     layout: "/admin",
@@ -37,8 +37,8 @@ var routes = [
 
   {
     path: "/partners",
-    name: "Staffs",
-    rtlName: "قائمة الجدول",
+    name: "Partners",
+    // rtlName: "قائمة الجدول",
     icon: "tim-icons icon-single-02",
     component: Staffs,
     layout: "/admin",
