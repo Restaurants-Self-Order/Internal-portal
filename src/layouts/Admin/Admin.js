@@ -35,7 +35,6 @@ import store from "store";
 import moment from 'moment'
 import { useHistory } from "react-router-dom";
 import { startLogin } from "store/actions/auth";
-import { auth } from "store/types";
 var ps;
 
 
@@ -54,15 +53,17 @@ function Admin(props) {
      router.push('/signin');   
     }
     else {
-      console.log('here')
-      dispatch({type: auth.LOGIN, data: { user: decoded, token}})
+      // console.log('here')
+      dispatch({type: 'AUTHENTICATE', data: { user: decoded, token}})
+      startLogin({decoded, token})
+     
     }
   }else {
     router.push('/signin');   
   }
   }
   const authenticate = useCallback(authLogic,[dispatch,router])
-
+  const location = useLocation();
   //logic for authentication
   React.useEffect(()=> {
 
@@ -70,10 +71,10 @@ function Admin(props) {
     // authLogic()
    
 
-  },[authenticate])
+  },[authenticate, location])
 
 
-  const location = useLocation();
+
   const mainPanelRef = React.useRef(null);
   const [sidebarOpened, setsidebarOpened] = React.useState(
     document.documentElement.className.indexOf("nav-open") !== -1
@@ -141,10 +142,11 @@ function Admin(props) {
     return "Brand";
   };
   return (
-    <Provider store={store()}>
+  
     <BackgroundColorContext.Consumer>
       {({ color, changeColor }) => (
         <React.Fragment>
+            <Provider store={store()}>
           <div className="wrapper">
             <Sidebar
               routes={routes}
@@ -172,10 +174,10 @@ function Admin(props) {
             </div>
           </div>
           <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+          </Provider>
         </React.Fragment>
       )}
     </BackgroundColorContext.Consumer>
-    </Provider>
   );
 }
 
