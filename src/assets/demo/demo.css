@@ -15,6 +15,80 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+/* .PhoneInputInput {
+  
+} */
+
+.PhoneInputCountryIconImg {
+  display: block;
+  width: 100%;
+  color: #d94fd2;
+  height: 100%;
+}
+.PhoneInputCountrySelectArrow {
+  color: #b648b4;
+}
+.PhoneInputInput {
+  border-color: #2b3553;
+  border-radius: 0.4285rem;
+  font-size: 0.75rem;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  display: block;
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  padding: 0.5rem 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.42857;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: transparent !important;
+  background-clip: padding-box;
+  border: 1px solid #cad1d7;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+  @media (prefers-reduced-motion: reduce) {
+    .PhoneInputInput {
+      transition: none; } }
+  .PhoneInputInput::-ms-expand {
+    background-color: transparent;
+    border: 0; }
+  .PhoneInputInput:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.8); }
+  .PhoneInputInput:focus {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #ffffff;
+    border-color: rgba(50, 151, 211, 0.25);
+    outline: 0; }
+  .PhoneInputInput::placeholder {
+    color: #adb5bd;
+    opacity: 1; }
+  .PhoneInputInput:disabled, .PhoneInputInput[readonly] {
+    background-color: #e9ecef;
+    opacity: 1; }
+
+input[type="date"].PhoneInputInput,
+input[type="time"].PhoneInputInput,
+input[type="datetime-local"].PhoneInputInput,
+input[type="month"].PhoneInputInput {
+  appearance: none; }
+
+select.PhoneInputInput:focus::-ms-value {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: transparent; }
+.menu-flags ul li span span {
+  color:rgba(0, 0, 0, 0.8) !important;
+}
+
+.menu-flags ul  {
+background: #1f87f8;
+
+}
+
+.menu-flags button span span  {
+ color:rgba(255, 255, 255, 0.8);
+}
 
 .font-size-10 {
   font-size: 10px !important;

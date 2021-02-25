@@ -27,11 +27,15 @@ import {
   Table,
   Row,
   Col,
+  Button
 } from "reactstrap";
 import { connect } from "react-redux";
+// import AddPartnerModal from "components/AddPartnerModal";
+import { useHistory } from "react-router-dom";
 
-const { REACT_APP_API_URL } = process.env
+const { REACT_APP_API_URL } = process.env;
 function StaffTable() {
+  const history = useHistory();
   // const auth = useSelector(state => state.auth);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -66,8 +70,15 @@ function StaffTable() {
         <Row>
           <Col md="12">
             <Card>
-              <CardHeader>
+              <CardHeader className='d-flex justify-content-between'>
                 <CardTitle tag="h4">Partners</CardTitle>
+                <Button 
+               
+                
+                onClick={() => history.push('/admin/partners/create')} className="btn-fill" color="primary" type="submit"
+                >
+               Create partner
+                </Button>
               </CardHeader>
               <CardBody>
                 <Table className="tablesorter" responsive>
@@ -98,8 +109,6 @@ function StaffTable() {
                        <td>{data.phone}</td>
                      </tr>
                       )))}  
-                   
-                  
                   </tbody>
                 </Table>
               </CardBody>

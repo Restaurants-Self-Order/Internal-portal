@@ -33,45 +33,41 @@ import {
 } from "reactstrap";
 import { useFormik } from 'formik';
 import axiosClient from "../services/AxiosClient";
-import {  connect, useDispatch } from "react-redux"
-import jwtDecode from "jwt-decode";
+import {  connect } from "react-redux"
 import {  NavLink, useHistory } from 'react-router-dom'
 import { startLogin } from "store/actions/auth";
+import * as Yup from 'yup';
+import { useAlert } from "react-alert";
+
+
+const validationSchema = Yup.object({
+    email: Yup.string().required(),
+    password: Yup.string().required(),
+    re_password: Yup.string()
+     .oneOf([Yup.ref('password'), null], 'Passwords must match')
+});
+
 function UserProfile() {
+
+
 const router = useHistory();
-const dispatch = useDispatch();
-
-    function validate(value) {
-      let error = { email: "", password: ""};
-      if (!value.email) {
-        error.email = "Email is required"
-      } else  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value.email)) {
-		   error.email = 'Invalid email address';
-      }
-      else return error.email = ''
-
-      if (!value.password) {
-        error.password = "Password is required";
-      }
-      else error.password = ''
-      return error;
-
-    // return error;
-    }
+// const dispatch = useDispatch();
+const alert = useAlert();
 
     
     const formik = useFormik({
         enableReinitialize: true,
-        validate: validate,
+        validationSchema: validationSchema,
         initialValues: {
           email: '',
-          password: ''
+          password: '',
+          re_password: ''
         },
         onSubmit: async values => {
        
             try {
 
-                const { data } =  await axiosClient.post('/auth/jwt/create/',
+                  await axiosClient.post('/auth/users/',
                 values,
                 {
                     headers: {
@@ -80,25 +76,34 @@ const dispatch = useDispatch();
                     }
                 }
                 )
-                localStorage.setItem('access_token' , data.access )
+            //     localStorage.setItem('access_token' , data.access )
 
-                const payload =  jwtDecode(data.access);
-                dispatch({type: 'AUTHENTICATE',  data: {user: payload, token : data.access}})
-                // console.log(payload)
-              //  await startLogin({decoded: payload, token:  data.access})
-                // dispatch({type: 'AUTHENTICATE', data: { user: payload, token: data.access}})
-
-                router.push('/')
+            //     const payload =  jwtDecode(data.access);
+            //     dispatch({type: 'AUTHENTICATE',  data: {user: payload, token : data.access}})
+            //     // console.log(payload)
+            //   //  await startLogin({decoded: payload, token:  data.access})
+            //     // dispatch({type: 'AUTHENTICATE', data: { user: payload, token: data.access}})
+                alert.success("Registration Successful")
+                setTimeout(() => {
+                    router.push('/signin')
+                }, 2000);
+               
                 
             } catch (error) {
                 console.log(error)
                 if ((error.message && error.message.toLowerCase() === 'network error') || (error && error.response && error.response.status === 500)) {
-                 formik.setFieldError('email', 'Network Error!!!')
+                    alert.error("Network Error!");
+                //  formik.setFieldError('email', 'Network Error!!!')
                     // actions.setSubmitting(false);
                 }
                 
                 if ( error.response && error.response.data && error.response.data.detail) {
-                    formik.setFieldError('email',error.response.data.detail)
+                    alert.error(error.response.data.detail);
+                    formik.setFieldError('email',error.response.data.detail);
+                }
+
+                if(error.response && error.response.data && error.response.data) {
+                    formik.setErrors(error.response.data)
                 }
             }
      
@@ -111,13 +116,13 @@ const dispatch = useDispatch();
   return (
     <>
       <div className="container-fluid w-100">
-        <Row className='d-flex justify-content-center mt-5 pt-5'>
+        <Row className='d-flex justify-content-center pt-5'>
           <Col className='d-flex flex-column' md="4" mx='auto'>
           <h1 className='mx-auto'>Logo</h1>
             <Card className='d-flex py-3'>
               <CardHeader className='d-flex flex-column'>
                  <i className="tim-icons icon-lock-circle displsy-4 font-size-30 mx-auto mb-5"></i>
-                <h2 className="title mx-auto">Welcome Back</h2>
+                <h2 className="title mx-auto">Register Now</h2>
               </CardHeader>
               <CardBody>
                 <Form onSubmit={formik.handleSubmit}>
@@ -133,9 +138,7 @@ const dispatch = useDispatch();
                          placeholder="mike@email.com" type="email" />
                         <div className="invalid-feedback d-block">{formik.errors && formik.errors.email}</div>
                       </FormGroup>
-                    
                     </Col>
-                   
                     </Row>
 
                 <Row>
@@ -150,10 +153,28 @@ const dispatch = useDispatch();
                          placeholder="mike@email.com" type="password" />
                         <div className="invalid-feedback d-block">{formik.errors && formik.errors.password}</div>
                       </FormGroup>
-                      New user? <NavLink to='/signup'>click to sign up</NavLink>
+                    
+                    </Col>
+                  </Row>
+
+                  <Row>
+                <Col className="mx-auto" md="8">
+                      <FormGroup className='is-invalid'>
+                        <label htmlFor="exampleInputEmail1">
+                          Password Confirmation
+                        </label>
+                        <Input 
+                          className={formik.errors && formik.errors.re_password && ' is-invalid'}
+                         name='re_password' onChange={e => formik.setFieldValue('re_password', e.target.value)} 
+                         placeholder="password confirmation" type="password" />
+                        <div className="invalid-feedback d-block">{formik.errors && formik.errors.re_password}</div>
+                      </FormGroup>
+                    
+                    Already have an account, <NavLink to='/signin'>click to sign in</NavLink>
                     </Col>
                   </Row>
                 </Form>
+
               </CardBody>
 
               <Row>
@@ -164,7 +185,7 @@ const dispatch = useDispatch();
                 
                 onClick={() => formik.submitForm()} className="btn-fill mx-auto w-100" color="primary" type="submit"
                 >
-                 { formik.isSubmitting ? 'Signing in' :  'Sign In' }
+                 { formik.isSubmitting ? 'Signing you up' :  'Sign Up' }
                 </Button>
               </CardFooter>
               </Col>
