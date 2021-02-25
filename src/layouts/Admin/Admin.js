@@ -27,6 +27,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
+// import 'react-notifications/lib/notifications.css';
 
 // import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
@@ -35,6 +36,8 @@ import store from "store";
 import moment from 'moment'
 import { useHistory } from "react-router-dom";
 import { startLogin } from "store/actions/auth";
+import CreatePartner from "views/partners/CreatePartner";
+// import Login from "Login"
 var ps;
 
 
@@ -46,18 +49,25 @@ function Admin(props) {
     const token =  localStorage.getItem('access_token');
    
     if (token) {
-      // decode the token
+      try {
+              // decode the token
       const decoded = await jwt_decode(token);
+
+      if ((moment().unix()/1) > +decoded.exp) {
+    
+      }
+      else {
+        // console.log('here')
+        dispatch({type: 'AUTHENTICATE', data: { user: decoded, token}})
+        startLogin({decoded, token})
+       
+      }
+      } catch (error) {
+        router.push('/signin');  
+      }
+
       // console.log((moment().unix()/1) < +decoded.exp)
-   if ((moment().unix()/1) > +decoded.exp) {
-     router.push('/signin');   
-    }
-    else {
-      // console.log('here')
-      dispatch({type: 'AUTHENTICATE', data: { user: decoded, token}})
-      startLogin({decoded, token})
-     
-    }
+ 
   }else {
     router.push('/signin');   
   }
@@ -164,6 +174,7 @@ function Admin(props) {
                 sidebarOpened={sidebarOpened}
               />
               <Switch>
+                <Route path="/admin/partners/create" render={(props) => <CreatePartner />} />
                 {getRoutes(routes)}
                 <Redirect from="*" to="/admin/dashboard" />
               </Switch>

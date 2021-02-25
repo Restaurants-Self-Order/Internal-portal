@@ -35,7 +35,7 @@ import { useFormik } from 'formik';
 import axiosClient from "../services/AxiosClient";
 import {  connect, useDispatch } from "react-redux"
 import jwtDecode from "jwt-decode";
-import {  useHistory } from 'react-router-dom'
+import {  NavLink, useHistory } from 'react-router-dom'
 import { startLogin } from "store/actions/auth";
 function UserProfile() {
 const router = useHistory();
@@ -150,7 +150,7 @@ const dispatch = useDispatch();
                          placeholder="mike@email.com" type="password" />
                         <div className="invalid-feedback d-block">{formik.errors && formik.errors.password}</div>
                       </FormGroup>
-                    
+                      New user? <NavLink to='/signup'>click to sign up</NavLink>
                     </Col>
                   </Row>
                 </Form>
