@@ -26,7 +26,7 @@ import axios from "axios";
 import ReactFlagsSelect from "react-flags-select";
  
 const { REACT_APP_API_URL } = process.env
-function UserProfile() {
+function UserProfile({ user, title }) {
   const alertCus = useAlert();
   const [country, setCountry] = useState([])
 const [value] = useState('')
@@ -45,8 +45,9 @@ useEffect(()=> {
 const router = useHistory();
 // const dispatch = useDispatch();
 
+
     function validate(value) {
-      let error = { email: "", password: ""};
+      let error = { email: "", password: "", country: ""};
       if (!value.email) {
         error.email = "Email is required"
       } else  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value.email)) {
@@ -62,29 +63,32 @@ const router = useHistory();
 
     // return error;
     }
-
-    
+   user ={
+     name: "Mama put restaurant"
+   }
     const formik = useFormik({
         enableReinitialize: true,
         validate: validate,
         initialValues: {
-          name: '',
-          first_name: '',
-          last_name: '',
-          email: '',
-          country: '',
-          state: '',
-          street_address: ''
+          name: user? user.name: '',
+          first_name: user? user.first_name: '',
+          last_name: user? user.last_name: '',
+          email: user? user.email: '',
+          country: user && user.country ? user.country.id : '',
+          state: user? user.first_name: '',
+          // state: user? user.first_name: '',
+          street_address: user? user.street_address:  '',
         },
         onSubmit: async values => {
-            // return alert(JSON.stringify(  {...values, country: country.find(c => c.alpha_two_code == values.country).uuid}))
+          // if
+          const countryData = country.find(c => c.alpha_two_code === values.country);
             try {
               await axios.post(REACT_APP_API_URL+ 'partner', 
-              {...values ,country: country.find(c => c.alpha_two_code === values.country).uuid},
+              {...values ,country: countryData && countryData.uuid , country_id: countryData && countryData.uuid},
                 {
                     headers: {
                         'Content-Type': `application/json`,
-                        // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                         // 'Access-Control-Allow-Origin' : '*'
                     }
                 }
@@ -128,7 +132,7 @@ const router = useHistory();
       <div className="container-fluid w-100">
         <Row className='d-flex justify-content-center'>
           <Col className='d-flex flex-column' md="12" mx='auto'>
-          <h1 className='mx-auto'>Create Partner</h1>
+          <h1 className='mx-auto'>Update Partner</h1>
             {/* <Card className='d-flex py-3'> */}
               <CardHeader className='d-flex flex-column'>
                  {/* <i className="tim-icons icon-lock-circle displsy-4 font-size-30 mx-auto mb-5"></i>
@@ -143,7 +147,7 @@ const router = useHistory();
                         Business Name
                           {/* {JSON.stringify(formik.errors)} */}
                         </label>
-                        <Input name='name' onChange={e => formik.setFieldValue('name', e.target.value) } 
+                        <Input value={formik.values.name} name='name' onChange={e => formik.setFieldValue('name', e.target.value) } 
                         className={formik.errors && formik.errors.name &&  'is-invalid'}
                          placeholder="Business Name" type="name" />
                         <div className="invalid-feedback d-block">{formik.errors && formik.errors.name}</div>
@@ -287,7 +291,8 @@ const router = useHistory();
                 <Button 
                 onClick={() => formik.submitForm()} className="btn-fill mx-auto w-100" color="primary" type="submit"
                 >
-                 { formik.isSubmitting ? 'Creating' :  'Create' }
+                { formik.isSubmitting ? (title === 'Update Partner' ? 'Updating' : 'Creating') : (title === 'Update Partner' ? 'Update' : 'Create')}
+                  
                 </Button>
               </CardFooter>
               </Col>

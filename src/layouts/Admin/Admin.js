@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Black Dashboard React v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/black-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { useCallback } from "react";
 import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
@@ -37,6 +20,7 @@ import moment from 'moment'
 import { useHistory } from "react-router-dom";
 import { startLogin } from "store/actions/auth";
 import CreatePartner from "views/partners/CreatePartner";
+import UpdatePartnerForm from "views/partners/UpdatePartnerForm";
 // import Login from "Login"
 var ps;
 
@@ -175,6 +159,7 @@ function Admin(props) {
               />
               <Switch>
                 <Route path="/admin/partners/create" render={(props) => <CreatePartner />} />
+                <Route path="/admin/partners/edit/:id" render={(props) => <UpdatePartnerForm />} />
                 {getRoutes(routes)}
                 <Redirect from="*" to="/admin/dashboard" />
               </Switch>

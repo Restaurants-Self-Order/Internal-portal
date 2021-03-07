@@ -54,6 +54,7 @@ ReactDOM.render(
           <Route path="/signup" render={(props) => <Register {...props} />} />
           <Route path="/signin" render={(props) => <Login {...props} />} />
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+          
           {/* <Route path="/rtl" render={(props) => <RTLLayout {...props} />} /> */}
           <Redirect from="/" to="/admin/dashboard" />
         

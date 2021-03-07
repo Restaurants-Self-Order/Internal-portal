@@ -45,7 +45,7 @@ function CreatePartner() {
                 {/* <CardTitle tag="h4">Partners</CardTitle> */}
               </CardHeader>
               <CardBody className='p-0'>
-              <PartnerForm/>
+              <PartnerForm title="Create Partner"/>
               </CardBody>
             </Card>
           </Col>
