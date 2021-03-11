@@ -2,7 +2,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import AuthReducer from './reducers/authReducer';
-
+//heroku deploy
 // import apodReducer from './reducers/apod';
 
 // compose enhancers
