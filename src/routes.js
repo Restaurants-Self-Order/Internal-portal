@@ -1,5 +1,6 @@
 import Dashboard from "views/Dashboard.js";
 import Staffs from "views/StaffsTable";
+import Application from "views/PartnerApplication";
 import Icons from "views/Icons.js";
 // import Map from "views/Map.js";
 // import Notifications from "views/Notifications.js";
@@ -16,6 +17,15 @@ var routes = [
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
     layout: "/admin",
+  },
+
+  {
+    path: "/applications",
+    name: "Application",
+    // rtlName: "قائمة الجدول",
+    icon: "tim-icons icon-single-02",
+    component: Application,
+    layout: "/application",
   },
 
   {
