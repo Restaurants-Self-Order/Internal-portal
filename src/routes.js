@@ -20,12 +20,21 @@ var routes = [
   },
 
   {
-    path: "/applications",
+    path: "/categories",
     name: "Application",
     // rtlName: "قائمة الجدول",
     icon: "tim-icons icon-single-02",
     component: Application,
-    layout: "/application",
+    layout: "/admin",
+  },
+
+  {
+    path: "/partners",
+    name: "Application",
+    // rtlName: "قائمة الجدول",
+    icon: "tim-icons icon-single-02",
+    component: Application,
+    layout: "/admin",
   },
 
   {
