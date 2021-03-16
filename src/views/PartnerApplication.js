@@ -27,7 +27,7 @@ function StaffTable() {
    
     try {
        setLoading(true);
-      const {data} = await axios.get(REACT_APP_API_URL+ 'partner-applications', {
+      const {data} = await axios.get(REACT_APP_API_URL+ 'partner-application', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -78,10 +78,10 @@ function StaffTable() {
                   
                   (data && data.map(data => (
                        <tr>
-                       <td>{data.name}</td>
+                       <td>{data.shop_name}</td>
                        <td>{data.first_name + ' ' + data.last_name}</td>
                        <td>{data.email}</td>
-                       <td>{data.street_address}</td>
+                       <td>{data.detailed_address}</td>
                        <td>{data.country}</td>
                        <td>{data.city}</td>
                        <td>{data.phone}</td>

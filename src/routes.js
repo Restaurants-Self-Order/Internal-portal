@@ -1,6 +1,7 @@
 import Dashboard from "views/Dashboard.js";
 import Staffs from "views/StaffsTable";
 import Application from "views/PartnerApplication";
+import Categories from "views/CategoriesList";
 import Icons from "views/Icons.js";
 // import Map from "views/Map.js";
 // import Notifications from "views/Notifications.js";
@@ -19,8 +20,10 @@ var routes = [
     layout: "/admin",
   },
 
+ 
+
   {
-    path: "/categories",
+    path: "/applications",
     name: "Application",
     // rtlName: "قائمة الجدول",
     icon: "tim-icons icon-single-02",
@@ -29,13 +32,14 @@ var routes = [
   },
 
   {
-    path: "/partners",
-    name: "Application",
+    path: "/categories",
+    name: "Categories",
     // rtlName: "قائمة الجدول",
-    icon: "tim-icons icon-single-02",
-    component: Application,
+    icon: "icon-bullet-list-67",
+    component: Categories,
     layout: "/admin",
   },
+
 
   {
     path: "/partners",
