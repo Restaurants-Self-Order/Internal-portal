@@ -27,7 +27,7 @@ function StaffTable() {
    
     try {
        setLoading(true);
-      const {data} = await axios.get(REACT_APP_API_URL+ 'partner-applications', {
+      const {data} = await axios.get(REACT_APP_API_URL+ 'category', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
